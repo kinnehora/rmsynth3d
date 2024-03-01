@@ -7,24 +7,27 @@ def main(p_filename, rm_filename, output_filename, rm_min, rm_max, rm_incr, smoo
 	"""
 	generate_pseudo3D.py. Written by Craig Anderson and Larry Rudnick in Feb 2024.
 
-	Generates a FITS cube from polarized intensity and Faraday depth data, applying Gaussian smoothing
-	to create a pseudo-3D visualization ready for analysis or further rendering. Implements the
-	method described in Rudnick+2024.
+	Generates a FITS cube in (RA,Dec,Phi), where Phi is the Faraday depth, from matched pairs of
+             polarized intensity and RM (=Faraday depth, =Phi) maps.
+	It applies user-specified Gaussian smoothing along the Phi axis
+	The output cube can be used by desired visualization software, such as ds9, or as input to visualize_pseudo3D.py
+        Implements the method described in Rudnick+2024.
 
 	Usage:
 		python generate_pseudo3D.py p_filename.fits rm_filename.fits output_cube.fits --rm_min -100 --rm_max 100 --rm_incr 1 --smooth_sigma 3
 
 	Parameters:
-		p_filename (str): Path to the polarized intensity FITS file.
-		rm_filename (str): Path to the Faraday depth FITS file.
-		output_filename (str): Path for the output FITS cube file.
-		rm_min (int, rad/m^2): Minimum Faraday depth value.
-		rm_max (int, rad/m^2): Maximum Faraday depth value.
-		rm_incr (float, rad/m^2): Pixel size in Faraday depth space.
+		p_filename (str): Path to the polarized intensity FITS file. 
+		rm_filename (str): Path to the Faraday depth FITS file.  
+		output_filename (str): Path for the output FITS cube file. 
+		rm_min (int, rad/m^2): Minimum Faraday depth value. 
+		rm_max (int, rad/m^2): Maximum Faraday depth value.  
+		rm_incr (float, rad/m^2): Pixel size in Faraday depth space. 
 		smooth_sigma (odd integer, channels): Smoothing factor (standard deviation of the Gaussian kernel) applied along
-							  the Faraday depth axis for the pseudo 3D representation.
+							  the Faraday depth axis 
 							  
-	NOTE: Input FITS maps must currently have NAXIS=3 with a singleton degenerate 'LINEAR' type axis (shape: 1, 4000, 4000), or script will fail. Dev work to handle a more diverse array of inputs welcome!
+	NOTES: Input FITS maps must currently have NAXIS=3 with a singleton degenerate 'LINEAR' type axis (shape: <4000,<4000,1), or script will fail. 
+               Dev work to handle a more diverse array of inputs welcome!
 	"""
 
 	# Input Validation
